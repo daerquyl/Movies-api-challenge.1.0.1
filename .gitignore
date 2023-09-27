@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ApiApplication/FileContentIndex
+/.vs/ApiApplication/v17
+/.vs/ApiApplication/DesignTimeBuild
+/.vs/ProjectEvaluation
+/ApiApplication/bin/Debug/netcoreapp3.1
+/ApiApplication/obj
+/ApiApplicationTests/bin/Debug/net6.0
+/ApiApplicationTests/obj
