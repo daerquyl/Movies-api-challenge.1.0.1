@@ -4,10 +4,8 @@ using ApiApplication.Services;
 using AutoFixture;
 using FluentAssertions;
 using Grpc.Core;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Moq.AutoMock;
-using Moq.AutoMock.Resolvers;
 using ProtoDefinitions;
 
 namespace ApiApplicationTests.UnitTests

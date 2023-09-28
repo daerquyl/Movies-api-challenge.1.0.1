@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApiApplication.Database.Entities
+namespace ApiApplication.Domain.Models
 {
     public class MovieEntity
     {
+        //TODO : make setters private
         public int Id { get; set; }
         public string Title { get; set; }
         public string ImdbId { get; set; }

@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using ApiApplication.Domain.Models;
+using MediatR;
 using System;
 
 namespace ApiApplication.UseCases.Showtimes.CreateShowtime
 {
-    public class CreateShowtimeCommand: IRequest<int>
+    public class CreateShowtimeCommand: IRequest<ShowtimeEntity>
     {
         public int AuditoriumId { get; set; }
         public string MovieId { get; set; }

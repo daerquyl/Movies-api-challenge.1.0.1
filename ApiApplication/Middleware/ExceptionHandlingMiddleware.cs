@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using ApiApplication.Domain.Exceptions;
 
 namespace ApiApplication.Middleware
 {

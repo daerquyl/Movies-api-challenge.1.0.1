@@ -1,5 +1,4 @@
-﻿using ApiApplication.Database.Entities;
-using ApiApplication.Database.Repositories.Abstractions;
+﻿using ApiApplication.Database.Repositories.Abstractions;
 using ApiApplication.Services;
 using ApiApplication.UseCases.Showtimes.CreateShowtime;
 using AutoFixture;
@@ -7,6 +6,7 @@ using Moq;
 using Moq.AutoMock;
 using FluentAssertions;
 using ApiApplication.Exceptions;
+using ApiApplication.Domain.Models;
 
 namespace ApiApplicationTests.UnitTests
 {

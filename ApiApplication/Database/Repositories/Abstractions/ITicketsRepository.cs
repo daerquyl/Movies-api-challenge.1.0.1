@@ -1,4 +1,4 @@
-﻿using ApiApplication.Database.Entities;
+﻿using ApiApplication.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +10,9 @@ namespace ApiApplication.Database.Repositories.Abstractions
     {
         Task<TicketEntity> ConfirmPaymentAsync(TicketEntity ticket, CancellationToken cancel);
         Task<TicketEntity> CreateAsync(ShowtimeEntity showtime, IEnumerable<SeatEntity> selectedSeats, CancellationToken cancel);
+        Task<TicketEntity> CreateAsync(TicketEntity ticket, CancellationToken cancel);
         Task<TicketEntity> GetAsync(Guid id, CancellationToken cancel);
         Task<IEnumerable<TicketEntity>> GetEnrichedAsync(int showtimeId, CancellationToken cancel);
+
     }
 }

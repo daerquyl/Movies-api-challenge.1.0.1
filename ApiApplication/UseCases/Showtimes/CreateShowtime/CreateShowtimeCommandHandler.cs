@@ -1,5 +1,5 @@
-﻿using ApiApplication.Database.Entities;
-using ApiApplication.Database.Repositories.Abstractions;
+﻿using ApiApplication.Database.Repositories.Abstractions;
+using ApiApplication.Domain.Models;
 using ApiApplication.Exceptions;
 using ApiApplication.Services;
 using MediatR;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.UseCases.Showtimes.CreateShowtime
 {
-    public class CreateShowtimeCommandHandler: IRequestHandler<CreateShowtimeCommand, int>
+    public class CreateShowtimeCommandHandler: IRequestHandler<CreateShowtimeCommand, ShowtimeEntity>
     {
         private readonly IMovieProvider movieProvider;
         private readonly IShowtimesRepository showtimeRepository;
@@ -27,7 +27,7 @@ namespace ApiApplication.UseCases.Showtimes.CreateShowtime
             this.auditoriumsRepository = auditoriumsRepository;
         }
 
-        public async Task<int> Handle(CreateShowtimeCommand command, CancellationToken cancel)
+        public async Task<ShowtimeEntity> Handle(CreateShowtimeCommand command, CancellationToken cancel)
         {
             GuardAgainstPastDates(command);
             await GuardUnexistingAuditorium(command, cancel);
@@ -38,9 +38,8 @@ namespace ApiApplication.UseCases.Showtimes.CreateShowtime
 
             try
             {
-                await showtimeRepository.CreateShowtime(showtime, cancel);
-                var saved = showtimeRepository.GetWithMoviesByIdAsync(showtime.Id, cancel);
-                return showtime.Id;
+                var saved = await showtimeRepository.CreateShowtime(showtime, cancel);
+                return saved;
             }
             catch (Exception e)
             {

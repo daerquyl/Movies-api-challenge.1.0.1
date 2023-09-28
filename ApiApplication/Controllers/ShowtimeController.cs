@@ -1,4 +1,5 @@
-﻿using ApiApplication.UseCases.Showtimes.CreateShowtime;
+﻿using ApiApplication.Dto;
+using ApiApplication.UseCases.Showtimes.CreateShowtime;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,9 +16,9 @@ public class ShowtimesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateShowtime([FromBody] CreateShowtimeCommand command)
+    public async Task<ActionResult<ShowtimeDto>> CreateShowtime([FromBody] CreateShowtimeCommand command)
     {
-        await _mediator.Send(command);
-        return Ok();
+        var showtime = await _mediator.Send(command);
+        return Ok(ShowtimeDto.FromEntity(showtime));
     }
 }

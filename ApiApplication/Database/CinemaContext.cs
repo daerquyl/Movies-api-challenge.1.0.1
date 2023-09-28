@@ -1,4 +1,4 @@
-﻿using ApiApplication.Database.Entities;
+﻿using ApiApplication.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiApplication.Database

@@ -1,10 +1,6 @@
-using ApiApplication.Database.Entities;
-using ApiApplication.Model.Factories;
-using ApiApplication.Services;
+using ApiApplication.Domain.Models;
 using AutoFixture;
 using FluentAssertions;
-using Moq;
-using Moq.AutoMock;
 
 namespace ApiApplicationTests.UnitTests
 {

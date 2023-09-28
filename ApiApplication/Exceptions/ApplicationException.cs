@@ -6,5 +6,11 @@
         {
             Code = 500;
         }
+
+        public ApplicationException(string type, int code, string message) : this(message)
+        {
+            Type = type;
+            Code = code;
+        }
     }
 }

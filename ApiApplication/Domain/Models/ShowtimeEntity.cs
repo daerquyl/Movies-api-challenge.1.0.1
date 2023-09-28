@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApiApplication.Database.Entities
+namespace ApiApplication.Domain.Models
 {
     public class ShowtimeEntity
     {
+        //TODO : make setters private
         public int Id { get; set; }
         public MovieEntity Movie { get; set; }
         public DateTime SessionDate { get; set; }

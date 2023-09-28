@@ -1,11 +1,12 @@
-﻿using ApiApplication.Database.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
 using System.Linq;
 using ApiApplication.Database.Repositories.Abstractions;
+using ApiApplication.Domain.Models;
+using System.Threading.Channels;
 
 namespace ApiApplication.Database.Repositories
 {
@@ -43,6 +44,14 @@ namespace ApiApplication.Database.Repositories
             await _context.SaveChangesAsync(cancel);
 
             return ticket.Entity;
+        }
+
+        public async Task<TicketEntity> CreateAsync(TicketEntity ticket, CancellationToken cancel)
+        {
+            var savedTicket = _context.Tickets.Add(ticket);
+            await _context.SaveChangesAsync(cancel);
+
+            return savedTicket.Entity;
         }
 
         public async Task<TicketEntity> ConfirmPaymentAsync(TicketEntity ticket, CancellationToken cancel)

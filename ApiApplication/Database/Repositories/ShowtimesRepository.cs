@@ -1,5 +1,4 @@
-﻿using ApiApplication.Database.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
@@ -7,6 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using ApiApplication.Database.Repositories.Abstractions;
+using ApiApplication.Domain.Models;
 
 namespace ApiApplication.Database.Repositories
 {
@@ -19,7 +19,7 @@ namespace ApiApplication.Database.Repositories
             _context = context;
         }
 
-        public async Task<ShowtimeEntity> GetWithMoviesByIdAsync(int id, CancellationToken cancel)
+        public async Task<ShowtimeEntity> GetWithMovieByIdAsync(int id, CancellationToken cancel)
         {
             return await _context.Showtimes
                 .Include(x => x.Movie)

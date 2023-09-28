@@ -1,4 +1,4 @@
-﻿using ApiApplication.Database.Entities;
+﻿using ApiApplication.Domain.Models;
 using ApiApplication.Exceptions;
 using Grpc.Core;
 using ProtoDefinitions;
