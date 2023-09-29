@@ -5,8 +5,8 @@ using System.Threading;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ApiApplication.Database.Repositories.Abstractions;
 using ApiApplication.Domain.Models;
+using ApiApplication.Database.Repositories.Abstractions;
 
 namespace ApiApplication.Database.Repositories
 {
@@ -30,6 +30,15 @@ namespace ApiApplication.Database.Repositories
         {
             return await _context.Showtimes
                 .Include(x => x.Tickets)
+                .FirstOrDefaultAsync(x => x.Id == id, cancel);
+        }
+
+        public async Task<ShowtimeEntity> GetWithMovieAndTicketsByIdAsync(int id, CancellationToken cancel)
+        {
+            return await _context.Showtimes
+                .Include(x => x.Movie)
+                .Include(x => x.Tickets)
+                .ThenInclude(x => x.Seats)
                 .FirstOrDefaultAsync(x => x.Id == id, cancel);
         }
 

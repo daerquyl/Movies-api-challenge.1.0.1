@@ -8,26 +8,26 @@ namespace ApiApplication.Domain.services
 {
     public partial class ReservationService
     {
-        private List<SeatEntity> GetAvailablesSeats(List<SeatEntity> auditoriumSeats, List<SeatEntity> alreadyReservedSeats, int showtime, int numberOfPlaces, bool allPlacesRequired = false)
+        private List<SeatEntity> GetAvailablesSeats(List<SeatEntity> auditoriumSeats, List<SeatEntity> reservedSeats, int showtime, int numberOfPlaces, bool allPlacesRequired = false)
         {
-            var resevedSeats = new List<SeatEntity>();
+            var availableSeats = new List<SeatEntity>();
 
-            TryGetEnoughSeats(numberOfPlaces, alreadyReservedSeats, resevedSeats);
+            TryGetEnoughSeats(numberOfPlaces, reservedSeats, availableSeats);
 
-            return resevedSeats;
+            return availableSeats;
 
-            void TryGetEnoughSeats(int numberOfPlaces, List<SeatEntity> alreadyReservedSeats, List<SeatEntity> resevedSeats)
+            void TryGetEnoughSeats(int numberOfPlaces, List<SeatEntity> reservedSeats, List<SeatEntity> availableSeats)
             {
                 int largestAvailableStartIndex, largestAvailableEndIndex;
-                Predicate<SeatEntity> isNotAlreadyReserved = seat => !alreadyReservedSeats.Any(reservedSeat => reservedSeat == seat);
+                Predicate<SeatEntity> isNotAlreadyReserved = seat => !reservedSeats.Any(reservedSeat => reservedSeat == seat);
                 GetLargestContiguousSeats(numberOfPlaces, auditoriumSeats, isNotAlreadyReserved, out largestAvailableStartIndex, out largestAvailableEndIndex);
 
                 for (var j = largestAvailableStartIndex; j < largestAvailableEndIndex; j++)
                 {
-                    resevedSeats.Add(auditoriumSeats.ElementAt(j));
+                    availableSeats.Add(auditoriumSeats.ElementAt(j));
                 }
 
-                if (allPlacesRequired && resevedSeats.Count < numberOfPlaces)
+                if (allPlacesRequired && availableSeats.Count < numberOfPlaces)
                 {
                     throw new SeatAlreadyReservedException(showtime);
                 }

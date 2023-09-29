@@ -61,10 +61,10 @@ namespace ApiApplication.Domain.Models
             reservation.ConfirmPayment();
         }
 
-        public IReadOnlyCollection<SeatEntity> GetFreeSeats(int showtime)
+        public IReadOnlyCollection<SeatEntity> GetReservedSeats(int showtime)
         {
             return Reservations?
-                .Where(r => r.ShowtimeId == showtime && !r.IsExpired && !r.IsSold)
+                .Where(r => r.ShowtimeId == showtime && (!r.IsExpired || r.IsSold))
                 .SelectMany(r => r.Seats)
                 .ToList();
         }

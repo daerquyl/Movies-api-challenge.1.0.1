@@ -1,7 +1,7 @@
 ﻿using ApiApplication.Dto;
-using ApiApplication.UseCases.Reservations.ConfirmReservation;
-using ApiApplication.UseCases.Reservations.ReserveAListOfSeats;
-using ApiApplication.UseCases.Reservations.ReserveARangeOfSeats;
+using ApiApplication.UseCases.Commands.Reservations.ConfirmReservation;
+using ApiApplication.UseCases.Commands.Reservations.ReserveAListOfSeats;
+using ApiApplication.UseCases.Commands.Reservations.ReserveARangeOfSeats;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -17,22 +17,22 @@ public class ReservationController: ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("/seats")]
-    public async Task<ActionResult<ReservationDto>> CreateReservation([FromBody] ReserveAListOfSeats command)
+    [HttpPost("/reserve/seats")]
+    public async Task<ActionResult<ReservationDto>> CreateReservation([FromBody] ReserveAListOfSeatsCommand command)
     {
         var reservation = await _mediator.Send(command);
         return Ok(ReservationDto.FromEntity(reservation));
     }
 
-    [HttpPost("/range")]
-    public async Task<ActionResult<ReservationDto>> CreateReservation([FromBody] ReserveARangeOfSeats command)
+    [HttpPost("/reserve/range")]
+    public async Task<ActionResult<ReservationDto>> CreateReservation([FromBody] ReserveARangeOfSeatsCommand command)
     {
         var reservation = await _mediator.Send(command);
         return Ok(ReservationDto.FromEntity(reservation));
     }
 
-    [HttpPost]
-    public async Task<IActionResult> ConfirmReservation([FromBody] ConfirmReservation command)
+    [HttpPost("/confirm")]
+    public async Task<IActionResult> ConfirmReservation([FromBody] ConfirmReservationCommand command)
     {
         await _mediator.Send(command);
         return Ok();

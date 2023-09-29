@@ -9,7 +9,6 @@ namespace ApiApplication.Domain.Models
         public short Row { get; set; }
         public short SeatNumber { get; set; }
         public int AuditoriumId { get; set; }
-        public DateTime? ReservedSince { get; set; } = null;
         public AuditoriumEntity Auditorium { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using ApiApplication.Database;
 using ApiApplication.Database.Repositories;
 using ApiApplication.Database.Repositories.Abstractions;
+using ApiApplication.Domain.services;
 using ApiApplication.Middleware;
 using ApiApplication.Services;
 using MediatR;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,12 +28,7 @@ namespace ApiApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ILocalMovieRepository, LocalMovieRepository>();
-            services.AddTransient<IShowtimesRepository, ShowtimesRepository>();
-            services.AddTransient<ITicketsRepository, TicketsRepository>();
-            services.AddTransient<IAuditoriumsRepository, AuditoriumsRepository>();
-            services.AddSingleton<IApiClient, ApiClientGrpc>();
-            services.AddSingleton<IMovieProvider, GrpcMovieProvider>();
+            RegisterApiApplicationServices(services);
 
             services.AddTransient<ExecutionTrackingMiddleware>();
             services.AddTransient<ExceptionHandlingMiddleware>();
@@ -49,16 +46,36 @@ namespace ApiApplication
             services.AddMediatR(typeof(Startup));
         }
 
+        private void RegisterApiApplicationServices(IServiceCollection services)
+        {
+            services.AddTransient<ILocalMovieRepository, LocalMovieRepository>();
+            services.AddTransient<IShowtimesRepository, ShowtimesRepository>();
+            services.AddTransient<ITicketsRepository, TicketsRepository>();
+            services.AddTransient<IAuditoriumsRepository, AuditoriumsRepository>();
+
+            services.AddSingleton<IApiClient>(sp => new ApiClientGrpc(Configuration));
+            services.AddSingleton<IMovieProvider, GrpcMovieProvider>();
+
+            services.AddSingleton<IReservationService, ReservationService>();
+            services.AddSingleton<ICachingService>(sp => new RedisCachingService(Configuration));
+
+
+            services.AddSwaggerGen();
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             app.UseMiddleware<ExecutionTrackingMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            if (env.IsDevelopment())
+            {
+                //app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
 

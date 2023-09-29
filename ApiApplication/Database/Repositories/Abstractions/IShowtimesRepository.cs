@@ -13,5 +13,6 @@ namespace ApiApplication.Database.Repositories.Abstractions
         Task<IEnumerable<ShowtimeEntity>> GetAllAsync(Expression<Func<ShowtimeEntity, bool>> filter, CancellationToken cancel);
         Task<ShowtimeEntity> GetWithMovieByIdAsync(int id, CancellationToken cancel);
         Task<ShowtimeEntity> GetWithTicketsByIdAsync(int id, CancellationToken cancel);
+        Task<ShowtimeEntity> GetWithMovieAndTicketsByIdAsync(int id, CancellationToken cancel);
     }
 }

@@ -5,8 +5,8 @@ using System.Threading;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ApiApplication.Database.Repositories.Abstractions;
 using ApiApplication.Domain.Models;
+using ApiApplication.Database.Repositories.Abstractions;
 
 namespace ApiApplication.Database.Repositories
 {

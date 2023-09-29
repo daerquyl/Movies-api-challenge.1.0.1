@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using System.Linq;
-using ApiApplication.Database.Repositories.Abstractions;
 using ApiApplication.Domain.Models;
-using System.Threading.Channels;
+using ApiApplication.Database.Repositories.Abstractions;
 
 namespace ApiApplication.Database.Repositories
 {
@@ -57,6 +56,13 @@ namespace ApiApplication.Database.Repositories
         public async Task<TicketEntity> ConfirmPaymentAsync(TicketEntity ticket, CancellationToken cancel)
         {
             ticket.Paid = true;
+            _context.Update(ticket);
+            await _context.SaveChangesAsync(cancel);
+            return ticket;
+        }
+
+        public async Task<TicketEntity> UpdateAsync(TicketEntity ticket, CancellationToken cancel)
+        {
             _context.Update(ticket);
             await _context.SaveChangesAsync(cancel);
             return ticket;

@@ -1,12 +1,12 @@
-﻿using ApiApplication.Database.Repositories.Abstractions;
-using ApiApplication.Services;
-using ApiApplication.UseCases.Showtimes.CreateShowtime;
+﻿using ApiApplication.Services;
 using AutoFixture;
 using Moq;
 using Moq.AutoMock;
 using FluentAssertions;
 using ApiApplication.Exceptions;
 using ApiApplication.Domain.Models;
+using ApiApplication.Database.Repositories.Abstractions;
+using ApiApplication.UseCases.Commands.Showtimes.CreateShowtime;
 
 namespace ApiApplicationTests.UnitTests
 {

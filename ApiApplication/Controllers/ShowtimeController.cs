@@ -1,10 +1,13 @@
-﻿using ApiApplication.Dto;
-using ApiApplication.UseCases.Showtimes.CreateShowtime;
+﻿using ApiApplication.Domain.ReadModels;
+using ApiApplication.Dto;
+using ApiApplication.UseCases.Commands.Showtimes.CreateShowtime;
+using ApiApplication.UseCases.Queries.GetSeatsInAuditorium;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/")]
 [ApiController]
 public class ShowtimesController : ControllerBase
 {
@@ -20,5 +23,29 @@ public class ShowtimesController : ControllerBase
     {
         var showtime = await _mediator.Send(command);
         return Ok(ShowtimeDto.FromEntity(showtime));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<ShowtimeWithReservations>>> GetShowtimes()
+    {
+        var query = new GetShowtimesQuery();
+        var showtimes = await _mediator.Send(query);
+        return Ok(showtimes);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ShowtimeWithReservations>> GetShowtimeWithReservations(int id)
+    {
+        var query = new GetShowtimeWithReservationsQuery(id);
+        var showtime = await _mediator.Send(query);
+        return Ok(showtime);
+    }
+
+    [HttpGet("{id}/seats")]
+    public async Task<ActionResult<ShowtimeWithReservations>> GetShowtimeWithSeats(int id)
+    {
+        var query = new GetShowtimeWithSeatsQuery(id);
+        var showtime = await _mediator.Send(query);
+        return Ok(showtime);
     }
 }

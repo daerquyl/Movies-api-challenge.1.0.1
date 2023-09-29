@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
 using ApiApplication.Domain.Exceptions;
+using Newtonsoft.Json;
 
 namespace ApiApplication.Middleware
 {
@@ -37,13 +37,15 @@ namespace ApiApplication.Middleware
 
             if (exception is BaseException ex)
             {
-                context.Response.ContentType = "application/problem+json";
-                await JsonSerializer.SerializeAsync(context.Response.Body, ex.ToProblem());
+                context.Response.ContentType = "application/json";
+                var json = JsonConvert.SerializeObject(ex.ToProblem());
+                await context.Response.WriteAsync(json);
             }
             else
             {
                 var problem = new Problem("Unknown error, we are investigating.", StatusCodes.Status500InternalServerError, "Internal");
-                await JsonSerializer.SerializeAsync(context.Response.Body, problem);
+                var json = JsonConvert.SerializeObject(problem);
+                await context.Response.WriteAsync(json);
             }
 
         }

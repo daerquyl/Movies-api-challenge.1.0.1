@@ -1,2 +1,71 @@
 Please add the cURLs of your tests here:
+# Create Showtime
+curl -X 'POST' \
+  'https://localhost:7629/api/Showtimes' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "auditoriumId": 2,
+  "movieId": "ID-test1",
+  "sessionDate": "2023-10-30T02:08:24.782Z"
+}'
 
+#Reserve a list of seats
+curl -X 'POST' \
+  'https://localhost:7629/reserve/seats' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "showtimeId": 1,
+  "seats": [
+    {
+      "row": 1,
+      "seatNumber": 2
+    },
+   {
+      "row": 1,
+      "seatNumber": 3
+    }
+  ],
+  "allPlacesAreRequired": false
+}'
+
+#Reserve a range of seat (the request indicate a number of seats, a the system decides which seats)
+curl -X 'POST' \
+  'https://localhost:7629/reserve/range' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "showtimeId": 1,
+  "numberOfSeats": 1000,
+  "allPlacesAreRequired": false
+}'
+
+#Confirm Reservation
+curl -X 'POST' \
+  'https://localhost:7629/confirm' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "reservationId": "e765cdc0-33d8-4941-a509-f45cc35d13bf"
+}'
+
+#Get Auditoriums 
+curl -X 'GET' \
+  'https://localhost:7629/api/Auditoriums' \
+  -H 'accept: text/plain'
+
+#Get Showtimes
+curl -X 'GET' \
+  'https://localhost:7629/api/Showtimes' \
+  -H 'accept: text/plain'
+
+#Get Showtime reservations
+curl -X 'GET' \
+  'https://localhost:7629/api/Showtimes/1' \
+  -H 'accept: text/plain'
+
+#Get Showtime(Auditorium) seats
+curl -X 'GET' \
+  'https://localhost:7629/api/Showtimes/1/seats' \
+  -H 'accept: text/plain'
